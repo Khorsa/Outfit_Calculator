@@ -1,0 +1,11 @@
+name: calculator
+display_name: "Calculator"
+assembly_name: "Calculator"
+description: "Калькулятор"
+author: "Stolyarov Roman"
+author_contacts: "rshome@mail.ru"
+version: '0.1'
+version_label: 'pre-alpha'
+require: '3.0'
+changes: >
+    0.1 initial version
