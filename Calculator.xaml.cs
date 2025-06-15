@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Settings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -26,13 +27,21 @@ namespace Calculator
     /// </summary>
     public partial class CalculatorForm : Window
     {
+        private const double MIN_HEIGHT = 300;
+        private const double MIN_WIDTH = 250;
+
         private CalculatorMachine calculator;
         bool resetOnCipher = false;
         string decimalSeparator = ".";
         private double _baseFontSize = 16;
 
+        private SettingsManager<CalculatorSettings> settingsManager = new SettingsManager<CalculatorSettings>();
+        private CalculatorSettings settings;
+
         public CalculatorForm()
         {
+            this.settings = settingsManager.LoadSettings();
+
             calculator = new CalculatorMachine();
             CultureInfo currentCulture = CultureInfo.CurrentCulture;
             decimalSeparator = currentCulture.NumberFormat.NumberDecimalSeparator;
@@ -40,6 +49,22 @@ namespace Calculator
             LocalizationHelper.LanguageChanged += LanguageChanged;
 
             InitializeComponent();
+
+            if (settings != null)
+            {
+                fixCoordinates(
+                    ref settings.top,
+                    ref settings.left,
+                    ref settings.width,
+                    ref settings.height
+                );
+
+                this.Top = settings.top;
+                this.Left = settings.left;
+                this.Width = settings.width;
+                this.Height = settings.height;
+            }
+
             UpdateFontSize();
         }
 
@@ -254,6 +279,31 @@ namespace Calculator
             {
                 this.Resources.MergedDictionaries.Add(LocalizationHelper.CurrentDictionary);
             }
+        }
+
+        private void fixCoordinates(ref double top, ref double left, ref double width, ref double height)
+        {
+            if (width < MIN_WIDTH) width = MIN_WIDTH;
+            if (height < MIN_HEIGHT) height = MIN_HEIGHT;
+
+            if (width > SystemParameters.WorkArea.Width) width = SystemParameters.WorkArea.Width;
+            if (height > SystemParameters.WorkArea.Height) height = SystemParameters.WorkArea.Height;
+
+
+            if (top < 0) top = 0;
+            if (left < 0) left = 0;
+
+            if (top > SystemParameters.WorkArea.Height - height) top = SystemParameters.WorkArea.Height - height;
+            if (left > SystemParameters.WorkArea.Width - width) left = SystemParameters.WorkArea.Width - width;
+        }
+
+        public void SaveWindowSettings()
+        {
+            settings.top = this.Top;
+            settings.left = this.Left;
+            settings.width = this.Width;
+            settings.height = this.Height;
+            settingsManager.SaveSettings(settings);
         }
     }
 }

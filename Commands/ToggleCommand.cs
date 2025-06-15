@@ -36,7 +36,6 @@ namespace Calculator.Commands
 
             if (ModuleController.calculatorWindow.Visibility == Visibility.Visible)
             {
-
                 ModuleController.calculatorWindow.Hide();
             }
             else

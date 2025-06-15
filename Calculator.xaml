@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="{ DynamicResource Calculator }" Height="288" Width="247" WindowStyle="ToolWindow" 
+        Title="{ DynamicResource Calculator }" Height="300" Width="250" WindowStyle="ToolWindow" 
         KeyUp="Window_KeyUp"
-        SizeChanged="Window_SizeChanged">
+        SizeChanged="Window_SizeChanged" 
+        >
 
     <Window.Resources>
         <ResourceDictionary>
