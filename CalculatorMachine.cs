@@ -1,19 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Calculator.Settings;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculator
 {
     class CalculatorMachine
     {
+        private const int MAX_HISTORY_SIZE = 10;
+
+        private readonly CalculatorSettings settings;
+        private List<CalculationHistoryItem> history = new List<CalculationHistoryItem>();
+        public CalculatorMachine(CalculatorSettings settings) {
+            this.settings = settings;
+        }
+
         public string calculate(string expression)
         {
             DataTable table = new DataTable();
-            var result = table.Compute(expression.Replace(",", "."), string.Empty);
-            return Convert.ToString(result);
+            var x = table.Compute(expression.Replace(",", "."), string.Empty);
+
+            double result = 0;
+            double.TryParse(Convert.ToString(x) ?? "", out result);
+            result = Math.Round(result, settings.roundTo);
+
+            history.Add(new CalculationHistoryItem(expression, result.ToString()));
+            if (history.Count > MAX_HISTORY_SIZE){
+                history = history.Slice(history.Count - MAX_HISTORY_SIZE, MAX_HISTORY_SIZE);
+            }
+
+            return result.ToString();
+        }
+
+        public List<CalculationHistoryItem> getLastHistory()
+        {
+            return history;
         }
     }
 }

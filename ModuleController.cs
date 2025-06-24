@@ -1,30 +1,28 @@
 ﻿using Calculator.Commands;
+using Calculator.Settings;
 using OutfitTool.Common;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Drawing;
-using Calculator.Settings;
-using System.Globalization;
+using System.Windows.Media.Imaging;
+using YamlDotNet.Serialization;
 
 namespace Calculator
 {
     internal class ModuleController : ModuleControllerInterface
     {
-        public static Window? calculatorWindow = null;
-        private SettingsManager<CalculatorSettings> settingsManager;
+        public static CalculatorForm? calculatorWindow = null;
 
         public ModuleController() 
         {
-            this.settingsManager = new SettingsManager<CalculatorSettings>();
         }
-
 
         public List<CommandInterface> getCommandList()
         {
@@ -35,26 +33,7 @@ namespace Calculator
 
         public void init()
         {
-            var settings = this.settingsManager.LoadSettings();
-
             calculatorWindow = new CalculatorForm();
-
-            if (settings.left < 0 || settings.left > SystemParameters.WorkArea.Width - settings.width)
-            {
-                settings.left = SystemParameters.WorkArea.Width - settings.width;
-            }
-
-            if (settings.top < 0 || settings.top > SystemParameters.WorkArea.Height - settings.height)
-            {
-                settings.top = SystemParameters.WorkArea.Height - settings.height;
-            }
-
-            calculatorWindow.Top = settings.top;
-            calculatorWindow.Left = settings.left;
-            calculatorWindow.Width = settings.width;
-            calculatorWindow.Height = settings.height;
-
-            return;
         }
 
         public void setLanguage(string language)
@@ -66,18 +45,9 @@ namespace Calculator
         {
             if (calculatorWindow != null)
             {
-                // Запоминаем положение окна
-                var settings = this.settingsManager.LoadSettings();
-
-                settings.top = calculatorWindow.Top;
-                settings.left = calculatorWindow.Left;
-                settings.width = calculatorWindow.Width;
-                settings.height = calculatorWindow.Height;
-                this.settingsManager.SaveSettings(settings);
-
-                calculatorWindow.Close();
+                calculatorWindow.SaveWindowSettings();
+                calculatorWindow.Close(); 
             }
-            return;
         }
 
         public BitmapImage? getTaskbarIcon()

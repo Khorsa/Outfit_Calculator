@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Settings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -26,20 +27,45 @@ namespace Calculator
     /// </summary>
     public partial class CalculatorForm : Window
     {
+        private const double MIN_HEIGHT = 300;
+        private const double MIN_WIDTH = 250;
+
         private CalculatorMachine calculator;
         bool resetOnCipher = false;
         string decimalSeparator = ".";
         private double _baseFontSize = 16;
 
+        private SettingsManager<CalculatorSettings> settingsManager = new SettingsManager<CalculatorSettings>();
+        private CalculatorSettings settings;
+
         public CalculatorForm()
         {
-            calculator = new CalculatorMachine();
+            this.settings = settingsManager.LoadSettings();
+
+            calculator = new CalculatorMachine(settings);
             CultureInfo currentCulture = CultureInfo.CurrentCulture;
             decimalSeparator = currentCulture.NumberFormat.NumberDecimalSeparator;
 
             LocalizationHelper.LanguageChanged += LanguageChanged;
 
             InitializeComponent();
+
+            if (settings != null)
+            {
+                fixCoordinates(
+                    ref settings.top,
+                    ref settings.left,
+                    ref settings.width,
+                    ref settings.height
+                );
+
+                this.Top = settings.top;
+                this.Left = settings.left;
+                this.Width = settings.width;
+                this.Height = settings.height;
+            }
+            updateStatusRound();
+
             UpdateFontSize();
         }
 
@@ -127,7 +153,9 @@ namespace Calculator
                 if (key == CalculatorKey.Square)
                 {
                     decimal x = Convert.ToDecimal(calculator.calculate(ResultBox.Text));
-                    ResultBox.Text = (x * x).ToString();
+
+                    ResultBox.Text = (x + "*" + x);
+                    ResultBox.Text = calculator.calculate(ResultBox.Text);
                     resetOnCipher = true;
                 }
 
@@ -135,6 +163,7 @@ namespace Calculator
                 {
                     double x = Convert.ToDouble(calculator.calculate(ResultBox.Text));
                     ResultBox.Text = Math.Sqrt(x).ToString();
+                    ResultBox.Text = calculator.calculate(ResultBox.Text);
                     resetOnCipher = true;
                 }
 
@@ -142,6 +171,7 @@ namespace Calculator
                 {
                     double x = Convert.ToDouble(calculator.calculate(ResultBox.Text));
                     ResultBox.Text = (1 / x).ToString();
+                    ResultBox.Text = calculator.calculate(ResultBox.Text);
                     resetOnCipher = true;
                 }
 
@@ -149,6 +179,7 @@ namespace Calculator
                 {
                     double x = Convert.ToDouble(calculator.calculate(ResultBox.Text));
                     ResultBox.Text = Math.Log(x).ToString();
+                    ResultBox.Text = calculator.calculate(ResultBox.Text);
                     resetOnCipher = true;
                 }
 
@@ -212,9 +243,9 @@ namespace Calculator
 
             ColorAnimation fadeOutAnimation = new ColorAnimation
             {
-                To = Colors.White,
-                Duration = TimeSpan.FromMilliseconds(200),
-                BeginTime = TimeSpan.FromMilliseconds(100)
+                To = Colors.LightCyan,
+                Duration = TimeSpan.FromMilliseconds(duration),
+                BeginTime = TimeSpan.FromMilliseconds(delay)
             };
 
             ResultBox.Background.BeginAnimation(SolidColorBrush.ColorProperty, fadeOutAnimation);
@@ -254,6 +285,71 @@ namespace Calculator
             {
                 this.Resources.MergedDictionaries.Add(LocalizationHelper.CurrentDictionary);
             }
+
+            updateStatusRound();
+        }
+
+        private void fixCoordinates(ref double top, ref double left, ref double width, ref double height)
+        {
+            if (width < MIN_WIDTH) width = MIN_WIDTH;
+            if (height < MIN_HEIGHT) height = MIN_HEIGHT;
+
+            if (width > SystemParameters.WorkArea.Width) width = SystemParameters.WorkArea.Width;
+            if (height > SystemParameters.WorkArea.Height) height = SystemParameters.WorkArea.Height;
+
+
+            if (top < 0) top = 0;
+            if (left < 0) left = 0;
+
+            if (top > SystemParameters.WorkArea.Height - height) top = SystemParameters.WorkArea.Height - height;
+            if (left > SystemParameters.WorkArea.Width - width) left = SystemParameters.WorkArea.Width - width;
+        }
+
+        public void SaveWindowSettings()
+        {
+            settings.top = this.Top;
+            settings.left = this.Left;
+            settings.width = this.Width;
+            settings.height = this.Height;
+            settingsManager.SaveSettings(settings);
+        }
+
+        private void RoundItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem? menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                settings.roundTo = ConvertStringToInt(menuItem.Header.ToString());
+                updateStatusRound();
+                settingsManager.SaveSettings(settings);
+            }
+        }
+
+        private void updateStatusRound()
+        {
+            StatusRoundText.Text = LocalizationHelper.GetString("RoundTo") + ": " + settings.roundTo.ToString();
+            foreach (MenuItem item in StatusRoundSelector.Items)
+            {
+                item.IsChecked = false;
+                if (item.Header.ToString() == settings.roundTo.ToString())
+                {
+                    item.IsChecked = true;
+                }
+            }
+        }
+
+
+        private int ConvertStringToInt(string? s)
+        {
+            if (s != null && int.TryParse(s, out _)) {
+                return Convert.ToInt32(s);
+            }
+            return CalculatorSettings.DEFAULT_ROUND_TO;
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            animateResultBox(Brushes.Black, 600, 0);
         }
     }
 }

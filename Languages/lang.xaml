@@ -3,4 +3,5 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="Calculator">Calculator</v:String>
     <v:String x:Key="ShowHide">Show/hide calculator</v:String>
+    <v:String x:Key="RoundTo">Round to</v:String>
 </ResourceDictionary>

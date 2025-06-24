@@ -8,9 +8,12 @@ namespace Calculator.Settings
 {
     public class CalculatorSettings
     {
-        public double left = 0;
-        public double top = 0;
+        public const int DEFAULT_ROUND_TO = 10;
+
+        public double left = int.MaxValue;
+        public double top = int.MaxValue;
         public double width = 247;
         public double height = 288;
+        public int roundTo = DEFAULT_ROUND_TO;
     }
 }
