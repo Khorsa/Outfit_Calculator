@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="{ DynamicResource Calculator }" Height="300" Width="250" WindowStyle="ToolWindow" 
         KeyUp="Window_KeyUp"
-        SizeChanged="Window_SizeChanged" 
+        SizeChanged="Window_SizeChanged" Activated="Window_Activated" 
         >
 
     <Window.Resources>
@@ -18,58 +18,97 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="243*"/>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="0*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Margin="10,10,3,10">
-            <!-- Определение колонок -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid>
 
-            <!-- Определение строк -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
-            <TextBox Grid.Row="0" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Grid.ColumnSpan="5" x:Name="ResultBox" TextWrapping="NoWrap" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontFamily="Verdana" IsReadOnly="True" Text=""/>
+            <Grid Margin="10,10,10,10" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Button Grid.Row="1" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">←</Button>
-            <Button Grid.Row="1" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Background="#FFDDDDDD" Foreground="Red">C</Button>
-            <Button Grid.Row="1" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">/</Button>
-            <Button Grid.Row="1" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">*</Button>
+                <TextBox Grid.Row="0" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Grid.ColumnSpan="5" x:Name="ResultBox" TextWrapping="NoWrap" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontFamily="Verdana" IsReadOnly="True" Text=""/>
+
+                <Button Grid.Row="1" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">←</Button>
+                <Button Grid.Row="1" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Background="#FFDDDDDD" Foreground="Red">C</Button>
+                <Button Grid.Row="1" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">/</Button>
+            <Button Grid.Row="1" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Content="*"/>
             <Button Grid.Row="1" Grid.Column="4" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">–</Button>
-            <Button Grid.Row="2" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">Ln</Button>
-            <Button Grid.Row="2" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">7</Button>
-            <Button Grid.Row="2" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">8</Button>
-            <Button Grid.Row="2" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">9</Button>
-            <Button Grid.Row="2" Grid.Column="4" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Grid.RowSpan="2">+</Button>
-            <Button Grid.Row="3" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">1/x</Button>
-            <Button Grid.Row="3" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">4</Button>
-            <Button Grid.Row="3" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">5</Button>
-            <Button Grid.Row="3" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">6</Button>
-            <Button Grid.Row="4" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">x²</Button>
-            <Button Grid.Row="4" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">1</Button>
-            <Button Grid.Row="4" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">2</Button>
-            <Button Grid.Row="4" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">3</Button>
-            <Button Grid.Row="4" Grid.Column="4" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Grid.RowSpan="2">=</Button>
-            <Button Grid.Row="5" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">√</Button>
-            <Button Grid.Row="5" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">±</Button>
-            <Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">0</Button>
-            <Button Grid.Row="5" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">.</Button>
-        </Grid>
+                <Button Grid.Row="2" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">Ln</Button>
+                <Button Grid.Row="2" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">7</Button>
+                <Button Grid.Row="2" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">8</Button>
+                <Button Grid.Row="2" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">9</Button>
+                <Button Grid.Row="2" Grid.Column="4" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Grid.RowSpan="2">+</Button>
+                <Button Grid.Row="3" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">1/x</Button>
+                <Button Grid.Row="3" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">4</Button>
+                <Button Grid.Row="3" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">5</Button>
+                <Button Grid.Row="3" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">6</Button>
+                <Button Grid.Row="4" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">x²</Button>
+                <Button Grid.Row="4" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">1</Button>
+                <Button Grid.Row="4" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">2</Button>
+                <Button Grid.Row="4" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">3</Button>
+                <Button Grid.Row="4" Grid.Column="4" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click" Grid.RowSpan="2">=</Button>
+                <Button Grid.Row="5" Grid.Column="0" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">√</Button>
+                <Button Grid.Row="5" Grid.Column="1" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">±</Button>
+                <Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">0</Button>
+                <Button Grid.Row="5" Grid.Column="3" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Click="Button_Click">.</Button>
+            </Grid>
+
+        <StatusBar Grid.Row="1">
+            <StatusBarItem Cursor="Hand">
+                <TextBlock x:Name="StatusRoundText" Text="{ DynamicResource RoundTo }" />
+                <StatusBarItem.ContextMenu>
+                    <ContextMenu x:Name="StatusRoundSelector">
+                        <MenuItem Header="0" Click="RoundItem_Click"/>
+                        <MenuItem Header="1" Click="RoundItem_Click"/>
+                        <MenuItem Header="2" Click="RoundItem_Click"/>
+                        <MenuItem Header="3" Click="RoundItem_Click"/>
+                        <MenuItem Header="4" Click="RoundItem_Click"/>
+                        <MenuItem Header="5" Click="RoundItem_Click"/>
+                        <MenuItem Header="6" Click="RoundItem_Click"/>
+                        <MenuItem Header="7" Click="RoundItem_Click"/>
+                        <MenuItem Header="8" Click="RoundItem_Click"/>
+                        <MenuItem Header="9" Click="RoundItem_Click"/>
+                        <MenuItem IsChecked="True" Header="10" Click="RoundItem_Click"/>
+                    </ContextMenu>
+                </StatusBarItem.ContextMenu>
+            </StatusBarItem>
+            <StatusBarItem Cursor="Hand" HorizontalAlignment="Right" Visibility="Hidden">
+                <TextBlock x:Name="StatusHistoryText" Text="История" />
+                <StatusBarItem.ContextMenu>
+                    <ContextMenu x:Name="StatusHistorySelector">
+                        <MenuItem Header="0" Click="RoundItem_Click"/>
+                        <MenuItem Header="1" Click="RoundItem_Click"/>
+                        <MenuItem Header="2" Click="RoundItem_Click"/>
+                        <MenuItem Header="3" Click="RoundItem_Click"/>
+                        <MenuItem Header="4" Click="RoundItem_Click"/>
+                        <MenuItem Header="5" Click="RoundItem_Click"/>
+                        <MenuItem Header="6" Click="RoundItem_Click"/>
+                        <MenuItem Header="7" Click="RoundItem_Click"/>
+                        <MenuItem Header="8" Click="RoundItem_Click"/>
+                        <MenuItem Header="9" Click="RoundItem_Click"/>
+                        <MenuItem IsChecked="True" Header="10" Click="RoundItem_Click"/>
+                    </ContextMenu>
+                </StatusBarItem.ContextMenu>
+            </StatusBarItem>
+        </StatusBar>
 
     </Grid>
+
+
 </Window>

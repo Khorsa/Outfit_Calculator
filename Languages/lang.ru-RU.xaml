@@ -3,4 +3,5 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="Calculator">Калькулятор</v:String>
     <v:String x:Key="ShowHide">Показать/скрыть калькулятор</v:String>
+    <v:String x:Key="RoundTo">Округление</v:String>
 </ResourceDictionary>
