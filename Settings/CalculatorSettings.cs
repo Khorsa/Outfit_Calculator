@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Calculator.Settings;
 
-namespace Calculator.Settings
+public class CalculatorSettings
 {
-    public class CalculatorSettings
-    {
-        public const int DEFAULT_ROUND_TO = 10;
+    public const int DEFAULT_ROUND_TO = 10;
 
-        public double left = int.MaxValue;
-        public double top = int.MaxValue;
-        public double width = 247;
-        public double height = 288;
-        public int roundTo = DEFAULT_ROUND_TO;
-    }
+    public double Left = int.MaxValue;
+    public double Top = int.MaxValue;
+    public double Width = 247;
+    public double Height = 288;
+    public int RoundTo = DEFAULT_ROUND_TO;
+    public bool CopyResultToClipboard = true;
 }

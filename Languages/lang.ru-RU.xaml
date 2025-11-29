@@ -4,4 +4,6 @@
     <v:String x:Key="Calculator">Калькулятор</v:String>
     <v:String x:Key="ShowHide">Показать/скрыть калькулятор</v:String>
     <v:String x:Key="RoundTo">Округление</v:String>
+    <v:String x:Key="Settings">Настройки</v:String>
+    <v:String x:Key="CopyResultToClipboard">Копировать результат в буфер обмена</v:String>
 </ResourceDictionary>

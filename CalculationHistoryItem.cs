@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Calculator;
 
-namespace Calculator
+internal class CalculationHistoryItem(string expression, string result)
 {
-    internal class CalculationHistoryItem
-    {
-        public CalculationHistoryItem(string Expression, string Result) 
-        {
-            this.Expression = Expression;
-            this.Result = Result;
-        }
-
-        public string Expression { get; set; }
-        public string Result { get; set; }
-    }
+    public string Expression { get; } = expression;
+    public string Result { get; } = result;
 }

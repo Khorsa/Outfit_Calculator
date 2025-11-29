@@ -1,72 +1,55 @@
 ﻿using Calculator.Commands;
-using Calculator.Settings;
-using OutfitTool.Common;
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Drawing;
+using OutfitTool.API1;
+using OutfitTool.API1.Dto;
+using OutfitTool.API1.Logger;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using YamlDotNet.Serialization;
 
-namespace Calculator
+namespace Calculator;
+
+internal class ModuleController : IModuleController
 {
-    internal class ModuleController : ModuleControllerInterface
+    public static CalculatorForm? CalculatorWindow;
+
+    public List<ICommand> GetCommandList()
     {
-        public static CalculatorForm? calculatorWindow = null;
+        return [new ToggleCommand()];
+    }
 
-        public ModuleController() 
-        {
-        }
+    public void SetLanguage(string language)
+    {
+        LocalizationHelper.SetLanguage(new CultureInfo(language));
+    }
 
-        public List<CommandInterface> getCommandList()
+    public void Shutdown()
+    {
+        if (CalculatorWindow != null)
         {
-            return new List<CommandInterface>([
-                new ToggleCommand()
-            ]);
+            CalculatorWindow.SaveWindowSettings();
+            CalculatorWindow.Close(); 
         }
+    }
 
-        public void init()
-        {
-            calculatorWindow = new CalculatorForm();
-        }
+    public BitmapImage? GetTaskbarIcon()
+    {
+        return null;
+    }
+    public string? GetTaskbarIconText()
+    {
+        return null;
+    }
 
-        public void setLanguage(string language)
-        {
-            LocalizationHelper.Language = new CultureInfo(language);
-        }
+    public Notification? PopNotification()
+    {
+        return null;
+    }
 
-        public void shutdown()
-        {
-            if (calculatorWindow != null)
-            {
-                calculatorWindow.SaveWindowSettings();
-                calculatorWindow.Close(); 
-            }
-        }
+    public void OpenSettings()
+    {
+    }
 
-        public BitmapImage? getTaskbarIcon()
-        {
-            return null;
-        }
-        public string? getTaskbarIconText()
-        {
-            return null;
-        }
-
-        public Notification? popNotification()
-        {
-            return null;
-        }
-
-        public void openSettings()
-        {
-        }
-
+    public void Init(ILogger logger)
+    {
+        CalculatorWindow = new CalculatorForm();
     }
 }

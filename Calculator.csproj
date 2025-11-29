@@ -17,14 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="arrow-down.png" />
     <None Remove="Resources\calculator.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\API\v1\API1.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="arrow-down.png" />
     <Resource Include="Resources\calculator.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

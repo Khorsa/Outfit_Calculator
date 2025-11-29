@@ -1,17 +1,17 @@
-﻿using OutfitTool.Common;
+﻿using OutfitTool.API1;
+using OutfitTool.API1.Dto;
 
-namespace Calculator
+namespace Calculator;
+
+internal class ModuleInfo : IModuleInfo
 {
-    internal class ModuleInfo : ModuleInfoInterface
-    {
-        public string Name => "calculator";
-        public string AssemblyName => "Calculator";
-        public string DisplayName => "Calculator";
-        public string Description => "Калькулятор";
-        public ModuleVersion Version => new ModuleVersion(0, 2, "pre-alpha");
-        public ModuleVersion Require => new ModuleVersion(3, 0);
-        public string Changes => "Первая версия";
-        public string Author => "Stolyarov Roman";
-        public string AuthorContacts => "rshome@mail.ru";
-    }
+    public string Name => "calculator";
+    public string AssemblyName => "Calculator";
+    public string DisplayName => "Calculator";
+    public string Description => "Калькулятор";
+    public ModuleVersion Version => new (0, 1, "alpha");
+    public string Changes => "Тестовая версия";
+    public string Author => "Stolyarov Roman";
+    public string AuthorContacts => "rshome@mail.ru";
+    public int RequireApiVersion => 1;
 }
