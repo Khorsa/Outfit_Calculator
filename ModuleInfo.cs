@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2026 Roman Stolyarov <rshome@mail.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@ internal class ModuleInfo : IModuleInfo
     public string AssemblyName => "Calculator";
     public string DisplayName => "Calculator";
     public string Description => "Калькулятор";
-    public ModuleVersion Version => new (1, 0, "release");
-    public string Changes => "Тестовая версия";
+    public ModuleVersion Version => new (1, 1, "release");
+    public string Changes => "1.1: исправлены зависания UI, пустые выражения и завершение модуля";
     public string Author => "Stolyarov Roman";
     public string AuthorContacts => "rshome@mail.ru";
     public int RequireApiVersion => 1;

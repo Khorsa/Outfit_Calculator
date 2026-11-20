@@ -1,4 +1,4 @@
-﻿using Calculator.Settings;
+using Calculator.Settings;
 using OutfitTool.API1;
 using System.Diagnostics;
 using System.Globalization;
@@ -44,7 +44,6 @@ public partial class CalculatorForm
                 // ignored
             }
 
-            Thread.Sleep(30); // Обход проблемы переспамливания Clipboard
             AnimateResultBox(Brushes.LightGreen, 100, 0);
         }
     }
@@ -339,6 +338,12 @@ public partial class CalculatorForm
             _settings.Height = Height;
             _settingsManager.SaveSettings(_settings);
         }
+    }
+
+    public void Shutdown()
+    {
+        SaveWindowSettings();
+        LocalizationHelper.LanguageChanged -= LanguageChanged;
     }
 
     private void RoundItem_Click(object sender, RoutedEventArgs e)

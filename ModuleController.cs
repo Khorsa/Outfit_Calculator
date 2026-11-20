@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2026 Roman Stolyarov <rshome@mail.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,8 +33,9 @@ internal class ModuleController : IModuleController
     {
         if (CalculatorWindow != null)
         {
-            CalculatorWindow.SaveWindowSettings();
+            CalculatorWindow.Shutdown();
             CalculatorWindow.Close(); 
+            CalculatorWindow = null;
         }
     }
 

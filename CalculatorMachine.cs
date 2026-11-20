@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2026 Roman Stolyarov <rshome@mail.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -68,7 +68,8 @@ class CalculatorMachine(CalculatorSettings settings)
             unaryOperator = CalculatorMachine.LN;
             expressionToCalculate = expression.Substring(unaryOperator.Length);
         }
-        if (expression.IndexOf(CalculatorMachine.SQUARE, StringComparison.Ordinal) == expression.Length - 1)
+        if (expression.Length > 0
+            && expression.IndexOf(CalculatorMachine.SQUARE, StringComparison.Ordinal) == expression.Length - 1)
         {
             unaryOperator = CalculatorMachine.SQUARE;
             expressionToCalculate = expression.Substring(0, expression.Length - unaryOperator.Length);

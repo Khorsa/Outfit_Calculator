@@ -103,7 +103,7 @@
                 <TextBlock x:Name="StatusSettings" Text="{ DynamicResource Settings }" Padding="0 0 5 0" />
                 <StatusBarItem.ContextMenu>
                     <ContextMenu x:Name="StatusSettingsSelector">
-                        <MenuItem IsCheckable="True" Header="{DynamicResource CopyResultToClipboard}" Tag="copyResultToClipboard" Click="StatusSettings_Click"/>
+                        <MenuItem IsCheckable="True" Header="{DynamicResource CopyResultToClipboard}" Tag="CopyResultToClipboard" Click="StatusSettings_Click"/>
                     </ContextMenu>
                 </StatusBarItem.ContextMenu>
             </StatusBarItem>
